@@ -1,0 +1,19 @@
+{
+  "name": "qualitymap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "report": "npx playwright show-report",
+    "debug": "npx playwright test --ui",
+    "test": "npx playwright test",
+    "newman": "newman run ServeRest.postman.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "@types/node": "^20.11.21"
+  }
+}

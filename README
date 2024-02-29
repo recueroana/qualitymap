@@ -1,0 +1,5 @@
+Para testes de API neste projeto foi utilizado o Newman e o código para rodar o teste é:
+
+- newman run ServeRest.postman.json
+
+Qualquer dúvida basta verificar o comando no step debug no arquivo package.json

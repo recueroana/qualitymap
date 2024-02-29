@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "3da8297f-855c-4be2-ba3f-744a1e393ce1",
+		"name": "ServeRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18074862"
+	},
+	"item": [
+		{
+			"name": "cadastro_usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"message\": {\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"_id\": {\r",
+							"            \"type\": \"string\"\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [\"message\", \"_id\"]\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Valida schema de cadastro de usuário\", function() {\r",
+							"    const Ajv = require('ajv');\r",
+							"    const ajv = new Ajv({allErrors: true});\r",
+							"\r",
+							"    const jsonResposta = pm.response.json(); // Fixed typo in pm.response\r",
+							"\r",
+							"    const retornoValidacao = ajv.validate(schema, jsonResposta); // Fixed typo in ajv.validate\r",
+							"\r",
+							"    pm.expect(retornoValidacao, ajv.errors).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Mariene da Silva\",\r\n  \"email\": \"teste@tes1te.com.br\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}"
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edita",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"message\": {\r",
+							"            \"type\": \"string\"\r",
+							"        },\r",
+							"        \"_id\": {\r",
+							"            \"type\": \"string\"\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [\"message\", \"_id\"]\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Valida schema de Alteração de usuário\", function() {\r",
+							"    const Ajv = require('ajv');\r",
+							"    const ajv = new Ajv({allErrors: true});\r",
+							"\r",
+							"    const jsonResposta = pm.response.json();\r",
+							"\r",
+							"    const retornoValidacao = ajv.validate(schema, jsonResposta);\r",
+							"\r",
+							"    pm.expect(retornoValidacao, ajv.errors).to.be.false;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Ana Silva\",\r\n  \"email\": \"silv@a@qa.com.br\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}"
+				},
+				"url": {
+					"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"0uxuPY0cbmQhpEz1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista usuários",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Define o ambiente\r",
+							"const baseUrl = pm.variables.get(\"baseUrl\");\r",
+							"\r",
+							"// Teste: Status Code\r",
+							"pm.test(\"Status code é 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Teste: Verifica se a resposta contém dados de usuários\r",
+							"pm.test(\"A resposta contém dados de usuários\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.usuarios).to.be.an(\"array\").that.is.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://serverest.dev/usuarios",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Define o ambiente\r",
+							"const baseUrl = pm.variables.get(\"baseUrl\");\r",
+							"\r",
+							"// Teste: Status Code\r",
+							"pm.test(\"Status code é 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Teste: Verifica se o usuário foi deletado com sucesso\r",
+							"pm.test(\"Usuário deletado com sucesso\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"Registro excluído com sucesso\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://serverest.dev/usuarios/6fdU7PNgLXKTMAlt",
+					"protocol": "https",
+					"host": [
+						"serverest",
+						"dev"
+					],
+					"path": [
+						"usuarios",
+						"6fdU7PNgLXKTMAlt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
